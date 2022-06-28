@@ -1,2 +1,2 @@
 export const NEED_AUTH = true;
-export const BASE_URL = "http://129.28.168.199:9999/api/v1";
+export const BASE_URL = "http://82.156.32.81:9999/api/v1";

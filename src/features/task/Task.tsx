@@ -1,5 +1,5 @@
-import React, { FC, useMemo } from "react";
-import type { Task as ITask } from "../../app/services/task"
+import React, {FC, useMemo} from "react";
+import type {Task as ITask} from "../../app/services/task"
 import {
     TaskStatus,
     useCreateTaskMutation,
@@ -7,11 +7,11 @@ import {
     useListTasksQuery,
     useUpdateTaskMutation
 } from "../../app/services/task";
-import { ColumnProps } from "antd/es/table";
-import { Button, DatePicker, Divider, Form, Input, message, Modal, Popconfirm, Select, Table, Tag } from "antd";
-import { useGetAllUsersQuery } from "../../app/services/user";
-import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import moment, { Moment } from "moment";
+import {ColumnProps} from "antd/es/table";
+import {Button, DatePicker, Divider, Form, Input, message, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {useGetAllUsersQuery} from "../../app/services/user";
+import {PlusOutlined, SearchOutlined} from "@ant-design/icons";
+import moment, {Moment} from "moment";
 
 
 type QueryTaskForm = {
@@ -47,8 +47,8 @@ const Task: FC = () => {
     const [endedAt, setEndedAt] = React.useState<string>()
     const [status, setStatus] = React.useState<TaskStatus>()
 
-    const { data: users } = useGetAllUsersQuery()
-    const { data, isLoading } = useListTasksQuery({
+    const {data: users} = useGetAllUsersQuery()
+    const {data, isLoading} = useListTasksQuery({
         page: page,
         page_size: pageSize,
         user_id: userId,
@@ -209,7 +209,7 @@ const Task: FC = () => {
                     </Select>
                 </Form.Item>
                 <Form.Item label={"任务名称"} name={"task_name"} className={"!mb-4"}>
-                    <Input placeholder={"请输入任务名称"} className={"!w-40"} />
+                    <Input placeholder={"请输入任务名称"} className={"!w-40"}/>
                 </Form.Item>
                 <Form.Item label={"任务状态"} name={"status"} className={"!mb-4"}>
                     <Select allowClear placeholder={"请选择任务状态"} className={"!w-40"}>
@@ -220,47 +220,48 @@ const Task: FC = () => {
                     </Select>
                 </Form.Item>
                 <Form.Item label={"开始时间"} name={"started_at"} className={"!mb-4"}>
-                    <DatePicker showTime placeholder={"任务开始时间"} className={"!w-40"} />
+                    <DatePicker showTime placeholder={"任务开始时间"} className={"!w-40"}/>
                 </Form.Item>
                 <Form.Item label={"结束时间"} name={"ended_at"} className={"!mb-4"}>
-                    <DatePicker showTime placeholder={"任务结束时间"} className={"!w-40"} />
+                    <DatePicker showTime placeholder={"任务结束时间"} className={"!w-40"}/>
                 </Form.Item>
                 <Form.Item className={"!mb-4"}>
-                    <Button type={"primary"} htmlType={"submit"} icon={<SearchOutlined />}>查询</Button>
-                    <Divider type={"vertical"} />
+                    <Button type={"primary"} htmlType={"submit"} icon={<SearchOutlined/>}>查询</Button>
+                    <Divider type={"vertical"}/>
                     <Button type={"primary"} htmlType={"reset"}>重置</Button>
                 </Form.Item>
             </Form>
-            <Button type={"primary"} icon={<PlusOutlined />} onClick={onAddTask}>新增</Button>
+            <Button type={"primary"} icon={<PlusOutlined/>} onClick={onAddTask}>新增</Button>
         </div>
-        <div className={"flex-1"}>
+        <div className={"flex-1 overflow-hidden"}>
             <Table columns={columns}
-                rowKey={"id"}
-                dataSource={data?.data ?? []}
-                loading={isLoading}
-                pagination={{
-                    current: page,
-                    pageSize: pageSize,
-                    total: data?.total ?? 0,
-                    showSizeChanger: true,
-                    showTotal: (total) => `共 ${total} 条记录`,
-                    onChange: onPageChange
-                }} />
+                   scroll={{y: `calc(100vh - 350px)`}}
+                   rowKey={"id"}
+                   dataSource={data?.data ?? []}
+                   loading={isLoading}
+                   pagination={{
+                       current: page,
+                       pageSize: pageSize,
+                       total: data?.total ?? 0,
+                       showSizeChanger: true,
+                       showTotal: (total) => `共 ${total} 条记录`,
+                       onChange: onPageChange
+                   }}/>
         </div>
         <Modal title={"新增任务"} visible={visible} onOk={onFinish} onCancel={onCancel}>
-            <Form form={form} labelCol={{ span: 4 }}>
-                <Form.Item label={"用户"} name={"user_id"} rules={[{ required: true }]}>
+            <Form form={form} labelCol={{span: 4}}>
+                <Form.Item label={"用户"} name={"user_id"} rules={[{required: true}]}>
                     <Select allowClear placeholder={"请选择用户"}>
                         {
                             users?.data?.map(u => <Select.Option key={u.id} value={u.id}>{u.nickname}</Select.Option>)
                         }
                     </Select>
                 </Form.Item>
-                <Form.Item label={"任务名称"} name={"task_name"} rules={[{ required: true }]}>
-                    <Input placeholder={"请输入任务名称"} />
+                <Form.Item label={"任务名称"} name={"task_name"} rules={[{required: true}]}>
+                    <Input placeholder={"请输入任务名称"}/>
                 </Form.Item>
                 {
-                    id != null && <Form.Item label={"任务状态"} name={"status"} rules={[{ required: true }]}>
+                    id != null && <Form.Item label={"任务状态"} name={"status"} rules={[{required: true}]}>
                         <Select allowClear placeholder={"请选择任务状态"}>
                             <Select.Option value={TaskStatus.NOT_STARTED}>未开始</Select.Option>
                             <Select.Option value={TaskStatus.IN_PROGRESS}>进行中</Select.Option>
@@ -269,11 +270,11 @@ const Task: FC = () => {
                         </Select>
                     </Form.Item>
                 }
-                <Form.Item label={"开始时间"} name={"started_at"} rules={[{ required: true }]}>
-                    <DatePicker showTime placeholder={"任务开始时间"} />
+                <Form.Item label={"开始时间"} name={"started_at"} rules={[{required: true}]}>
+                    <DatePicker showTime placeholder={"任务开始时间"}/>
                 </Form.Item>
-                <Form.Item label={"结束时间"} name={"ended_at"} rules={[{ required: true }]}>
-                    <DatePicker showTime placeholder={"任务结束时间"} />
+                <Form.Item label={"结束时间"} name={"ended_at"} rules={[{required: true}]}>
+                    <DatePicker showTime placeholder={"任务结束时间"}/>
                 </Form.Item>
             </Form>
         </Modal>

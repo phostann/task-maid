@@ -158,17 +158,21 @@ const User: FC = () => {
             <Button type="primary" icon={<PlusOutlined></PlusOutlined>} onClick={onAddUser}>新增</Button>
         </div>
         <div className="flex-1 overflow-hidden">
-            <Table dataSource={data?.data ?? []} columns={columns} loading={isLoading} rowKey="id"
-                   scroll={{y: `calc(100%)`}} pagination={
-                {
-                    current: page,
-                    pageSize: pageSize,
-                    showSizeChanger: true,
-                    total: data?.total ?? 0,
-                    showTotal: (total) => `共 ${total} 条记录`,
-                    onChange: onPageChange
-                }
-            }></Table>
+            <Table dataSource={data?.data ?? []}
+                   columns={columns}
+                   loading={isLoading}
+                   rowKey="id"
+                   scroll={{y: `calc(100vh - 350px)`}}
+                   pagination={
+                       {
+                           current: page,
+                           pageSize: pageSize,
+                           showSizeChanger: true,
+                           total: data?.total ?? 0,
+                           showTotal: (total) => `共 ${total} 条记录`,
+                           onChange: onPageChange
+                       }
+                   }/>
         </div>
         <Modal visible={visible} title={"新增用户"} onOk={onFinish} onCancel={onCancel}>
             <Form form={form} labelCol={{span: 4}}>
